@@ -1,0 +1,46 @@
+{
+  "args0": [
+    {
+      "type": "field_data_list_selector",
+      "name": "modelpart",
+      "datalist": "humanoidparts"
+    },
+    {
+      "type": "field_data_list_selector",
+      "name": "model",
+      "datalist": "humanoidmodels",
+      "customEntryProviders": "humanoidmodel"
+    },
+    {
+      "type": "field_image",
+      "src": "./res/client.png",
+      "width": 8,
+      "height": 24
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": "#a84095",
+  "mcreator": {
+    "toolbox_id": "cemplayers",
+    "fields": [
+      "modelpart",
+      "model"
+    ],
+    "dependencies": [
+      {
+        "name": "entity",
+        "type": "entity"
+      },
+      {
+        "name": "entityModel",
+        "type": "model"
+      },
+      {
+        "name": "playerRenderEvent",
+        "type": "playerrendering"
+      }
+    ]
+  }
+}

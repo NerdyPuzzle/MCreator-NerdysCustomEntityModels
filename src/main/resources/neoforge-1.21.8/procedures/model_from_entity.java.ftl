@@ -1,0 +1,1 @@
+(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(${input$entity}) instanceof LivingEntityRenderer renderer${cbi} ? (EntityModel) renderer${cbi}.getModel() : null)

@@ -1,0 +1,1 @@
+((PlayerModel)entityModel).${generator.map(field$modelpart, "modelparts")}.skipDraw = !(${input$visibility});

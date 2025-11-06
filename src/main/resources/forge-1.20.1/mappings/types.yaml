@@ -1,0 +1,6 @@
+texturelocation: ResourceLocation
+model: EntityModel
+entityrendering: RenderLivingEvent
+playerrendering: RenderPlayerEvent
+armrendering: RenderArmEvent
+posestack: PoseStack

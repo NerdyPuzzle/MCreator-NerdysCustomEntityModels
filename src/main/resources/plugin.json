@@ -1,0 +1,14 @@
+{
+  "id": "nerdys_custom_entity_models",
+  "weight": 7000,
+  "supportedversions": [
+    2025003
+  ],
+  "javaplugin": "net.nerdypuzzle.entitymodels.Launcher",
+  "info": {
+    "name": "Nerdy's Custom Entity Models",
+    "version": "1.0",
+    "description": "Render custom models on any entity",
+    "author": "NerdyPuzzle"
+  }
+}

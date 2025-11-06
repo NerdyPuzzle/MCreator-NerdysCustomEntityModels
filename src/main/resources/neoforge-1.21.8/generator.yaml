@@ -1,0 +1,7 @@
+base_templates:
+  - template: renderstate_modifiers.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameRenderStateModifiers.java"
+  - template: modbase/accesstransformer.cfg.ftl
+    usercodeComment: "#"
+    writer: file
+    name: "@RESROOT/META-INF/accesstransformer.cfg"
