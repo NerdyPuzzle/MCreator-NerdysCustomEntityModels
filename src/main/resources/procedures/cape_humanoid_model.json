@@ -12,6 +12,11 @@
       "customEntryProviders": "humanoidmodel"
     },
     {
+      "type": "input_value",
+      "name": "maxRotation",
+      "check": "Number"
+    },
+    {
       "type": "field_image",
       "src": "./res/client.png",
       "width": 8,
@@ -24,9 +29,15 @@
   "colour": "#a84095",
   "mcreator": {
     "toolbox_id": "cemplayers",
+    "toolbox_init": [
+      "<value name=\"maxRotation\"><block type=\"math_number\"><field name=\"NUM\">1.41</field></block></value>"
+    ],
     "fields": [
       "modelpart",
       "model"
+    ],
+    "inputs": [
+      "maxRotation"
     ],
     "dependencies": [
       {

@@ -1,4 +1,4 @@
 {
     ResourceLocation texture = ${input$texture};
-    renderEntity(entityRenderEvent, ${input$model}, entityRenderEvent.getMultiBufferSource().getBuffer(RenderType.${generator.map(field$rendertype, "rendertypes")})));
+    renderEntity(entityRenderEvent, (LivingEntity) entity, ${input$model}, entityRenderEvent.getMultiBufferSource().getBuffer(RenderType.${generator.map(field$rendertype, "rendertypes")})));
 }

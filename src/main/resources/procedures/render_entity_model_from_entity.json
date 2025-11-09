@@ -2,8 +2,8 @@
   "args0": [
     {
       "type": "input_value",
-      "name": "model",
-      "check": "Model"
+      "name": "entity",
+      "check": "Entity"
     },
     {
       "type": "input_value",
@@ -29,11 +29,11 @@
   "mcreator": {
     "toolbox_id": "cementities",
     "toolbox_init": [
-      "<value name=\"model\"><block type=\"variables_get_model\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\"></field></block></value>",
+      "<value name=\"entity\"><block type=\"entity_from_deps\"></block></value>",
       "<value name=\"texture\"><block type=\"variables_get_texturelocation\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\"></field></block></value>"
     ],
     "inputs": [
-      "model",
+      "entity",
       "texture"
     ],
     "fields": [
@@ -41,8 +41,8 @@
     ],
     "dependencies": [
       {
-        "name": "entity",
-        "type": "entity"
+        "name": "poseStack",
+        "type": "posestack"
       },
       {
         "name": "entityRenderEvent",

@@ -18,10 +18,11 @@
 		execute(event<#if dependenciesCode?has_content>,</#if>${dependenciesCode});
 	}
 
-	public static void renderEntity(RenderLivingEvent entityRenderEvent, EntityModel model, VertexConsumer vertexConsumer) {
+	public static void renderEntity(RenderLivingEvent entityRenderEvent, LivingEntity renderEntity, EntityModel model, VertexConsumer vertexConsumer) {
         PoseStack poseStack = entityRenderEvent.getPoseStack();
         entityRenderEvent.getRenderer().getModel().copyPropertiesTo(model);
         LivingEntity eventEntity_ = entityRenderEvent.getEntity();
+        model.young = eventEntity_.isBaby();
         float partialTick = entityRenderEvent.getPartialTick();
         float limbSwing = eventEntity_.walkAnimation.position(partialTick);
         float limbSwingAmount = eventEntity_.walkAnimation.speed(partialTick);
@@ -42,8 +43,8 @@
         }
 		poseStack.scale(-1, -1, 1);
 		poseStack.translate(0.0D, -1.501, 0.0D);
-        model.prepareMobModel(eventEntity_, limbSwing, limbSwingAmount, partialTick);
-        model.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        model.prepareMobModel(renderEntity, limbSwing, limbSwingAmount, partialTick);
+        model.setupAnim(renderEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         model.renderToBuffer(poseStack, vertexConsumer, entityRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(eventEntity_, 0));
         poseStack.popPose();
     }

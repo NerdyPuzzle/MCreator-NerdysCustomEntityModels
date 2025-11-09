@@ -30,7 +30,7 @@
 
             if (xRot < -5.0F) xRot = -5.0F;
 
-            ${humanoid}.${part}.xRot = (float)Math.toRadians(6.0F + xRot / 2.0F + yRot / 2.0F) + ((PlayerModel) entityModel).${part}.xRot;
+            ${humanoid}.${part}.xRot = Math.min((float)Math.toRadians(6.0F + xRot / 2.0F + yRot / 2.0F) + ((PlayerModel) entityModel).${part}.xRot, ${opt.toFloat(input$maxRotation)});
             ${humanoid}.${part}.yRot = 0.0F;
             ${humanoid}.${part}.zRot = (float)Math.toRadians(zRot / 2.0F);
         } else {

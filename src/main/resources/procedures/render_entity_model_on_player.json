@@ -27,7 +27,7 @@
   "nextStatement": null,
   "colour": "#a84095",
   "mcreator": {
-    "toolbox_id": "cementities",
+    "toolbox_id": "cemplayers",
     "toolbox_init": [
       "<value name=\"model\"><block type=\"variables_get_model\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\"></field></block></value>",
       "<value name=\"texture\"><block type=\"variables_get_texturelocation\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\"></field></block></value>"
@@ -41,12 +41,8 @@
     ],
     "dependencies": [
       {
-        "name": "entity",
-        "type": "entity"
-      },
-      {
-        "name": "entityRenderEvent",
-        "type": "entityrendering"
+        "name": "playerRenderEvent",
+        "type": "playerrendering"
       }
     ]
   }

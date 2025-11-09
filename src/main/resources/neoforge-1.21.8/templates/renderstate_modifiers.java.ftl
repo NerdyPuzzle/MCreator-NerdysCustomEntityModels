@@ -10,4 +10,29 @@ public class ${JavaModName}RenderStateModifiers {
     public static void registerModifiers(RegisterRenderStateModifiersEvent event) {
         event.registerEntityModifier(new TypeToken<LivingEntityRenderer<LivingEntity, LivingEntityRenderState, ?>>(){}, (entity, state) -> state.setRenderData(LIVING_ENTITY, (LivingEntity) entity));
     }
+
+    public static LivingEntityRenderState cloneRenderState(LivingEntityRenderState newState, LivingEntityRenderState originalState) {
+        newState.x = originalState.x;
+        newState.y = originalState.y;
+        newState.z = originalState.z;
+        newState.ageInTicks = originalState.ageInTicks;
+        newState.distanceToCameraSq = originalState.distanceToCameraSq;
+        newState.displayFireAnimation = originalState.displayFireAnimation;
+        newState.wornHeadAnimationPos = originalState.wornHeadAnimationPos;
+        newState.partialTick = originalState.partialTick;
+        newState.passengerOffset = originalState.passengerOffset;
+        newState.eyeHeight = originalState.eyeHeight;
+        newState.bodyRot = originalState.bodyRot;
+        newState.yRot = originalState.yRot;
+        newState.xRot = originalState.xRot;
+        newState.deathTime = originalState.deathTime;
+        newState.walkAnimationPos = originalState.walkAnimationPos;
+        newState.walkAnimationSpeed = originalState.walkAnimationSpeed;
+        newState.scale = originalState.scale;
+        newState.ageScale = originalState.ageScale;
+        newState.isBaby = originalState.isBaby;
+        newState.hasRedOverlay = originalState.hasRedOverlay;
+        newState.isInvisibleToPlayer = originalState.isInvisibleToPlayer;
+        return newState;
+    }
 }

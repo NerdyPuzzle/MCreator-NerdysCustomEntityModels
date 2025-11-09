@@ -80,3 +80,25 @@
         offsetScale(model, offset);
         poseStack.popPose();
     }
+
+	public static void renderEntity(RenderPlayerEvent playerRenderEvent, EntityModel model, VertexConsumer vertexConsumer) {
+        PoseStack poseStack = playerRenderEvent.getPoseStack();
+        playerRenderEvent.getRenderer().getModel().copyPropertiesTo(model);
+        AbstractClientPlayer eventEntity_ = (AbstractClientPlayer) playerRenderEvent.getEntity();
+        float partialTick = playerRenderEvent.getPartialTick();
+        float limbSwing = eventEntity_.walkAnimation.position(partialTick);
+        float limbSwingAmount = eventEntity_.walkAnimation.speed(partialTick);
+        float ageInTicks = eventEntity_.tickCount + partialTick;
+        float interpolatedBodyYaw = Mth.rotLerp(partialTick, eventEntity_.yBodyRotO, eventEntity_.yBodyRot);
+        float interpolatedHeadYaw = Mth.rotLerp(partialTick, eventEntity_.yHeadRotO, eventEntity_.yHeadRot);
+        float netHeadYaw = interpolatedHeadYaw - interpolatedBodyYaw;
+        float headPitch = Mth.lerp(partialTick, eventEntity_.xRotO, eventEntity_.getXRot());
+        poseStack.pushPose();
+        playerRenderEvent.getRenderer().setupRotations(eventEntity_, poseStack, ageInTicks, interpolatedBodyYaw, partialTick, 0);
+		poseStack.scale(-0.938f, -0.938f, 0.938f);
+		poseStack.translate(0.0D, -1.501, 0.0D);
+        model.prepareMobModel(eventEntity_, limbSwing, limbSwingAmount, partialTick);
+        model.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(eventEntity_, 0));
+        poseStack.popPose();
+    }

@@ -64,8 +64,19 @@
 		    capes.forEach(cape -> cape.run());
 		    capes.clear();
 		}
-		model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), OverlayTexture.NO_OVERLAY);
+		model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(state, 0));
 		offset.negate();
 		offsetScale(model, offset);
 		poseStack.popPose();
 	}
+	
+	public static void renderEntity(RenderPlayerEvent playerRenderEvent, EntityModel model, VertexConsumer vertexConsumer, LivingEntityRenderState state) {
+        PoseStack poseStack = playerRenderEvent.getPoseStack();
+        poseStack.pushPose();
+		playerRenderEvent.getRenderer().setupRotations((PlayerRenderState) state, poseStack, state.bodyRot, 0);
+		poseStack.scale(-0.938f, -0.938f, 0.938f);
+		poseStack.translate(0.0D, -1.501, 0.0D);
+        model.setupAnim(state);
+        model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(state, 0));
+        poseStack.popPose();
+    }
