@@ -326,7 +326,10 @@ import net.minecraft.nbt.Tag;
 			if (context.flow() == PacketFlow.CLIENTBOUND && message.data != null) {
 				context.enqueueWork(() ->
 					<#-- If we use setData here, we may get unwanted references to old data instance -->
-					context.player().level().getEntity(message.player).getData(PLAYER_VARIABLES).deserializeNBT(context.player().registryAccess(), message.data.serializeNBT(context.player().registryAccess()))
+					Entity player = context.player().level().getEntity(message.player);
+					if (player == null)
+					    return;
+					player.getData(PLAYER_VARIABLES).deserializeNBT(context.player().registryAccess(), message.data.serializeNBT(context.player().registryAccess()))
 				).exceptionally(e -> {
 					context.connection().disconnect(Component.literal(e.getMessage()));
 					return null;
