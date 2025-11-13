@@ -329,7 +329,7 @@ import net.minecraft.nbt.Tag;
 					Entity player = context.player().level().getEntity(message.player);
 					if (player == null)
 					    return;
-					player.getData(PLAYER_VARIABLES).deserializeNBT(context.player().registryAccess(), message.data.serializeNBT(context.player().registryAccess()))
+					player.getData(PLAYER_VARIABLES).deserializeNBT(context.player().registryAccess(), message.data.serializeNBT(context.player().registryAccess()));
 				).exceptionally(e -> {
 					context.connection().disconnect(Component.literal(e.getMessage()));
 					return null;
