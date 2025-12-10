@@ -1,1 +1,1 @@
-(Minecraft.getInstance().options.getCameraType().isFirstPerson() && Minecraft.getInstance().player == entity)
+(Minecraft.getInstance().options.getCameraType().isFirstPerson() && Minecraft.getInstance().player == entity && Minecraft.getInstance().screen == null)
