@@ -33,18 +33,30 @@ import net.minecraft.nbt.Tag;
 
 	<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
 	@SubscribeEvent public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
-		if (event.getEntity() instanceof ServerPlayer player)
+		if (event.getEntity() instanceof ServerPlayer player) {
+		    for (Entity entityiterator : player.level().players())
+		        if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+		            PacketDistributor.sendToPlayer(player, new PlayerVariablesSyncMessage(playeriterator.getData(PLAYER_VARIABLES), playeriterator.getId()));
 			PacketDistributor.sendToPlayersInDimension(player.level(), new PlayerVariablesSyncMessage(player.getData(PLAYER_VARIABLES), player.getId()));
+	    }
 	}
 
 	@SubscribeEvent public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
-		if (event.getEntity() instanceof ServerPlayer player)
+		if (event.getEntity() instanceof ServerPlayer player) {
+		    for (Entity entityiterator : player.level().players())
+		        if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+		            PacketDistributor.sendToPlayer(player, new PlayerVariablesSyncMessage(playeriterator.getData(PLAYER_VARIABLES), playeriterator.getId()));
 			PacketDistributor.sendToPlayersInDimension(player.level(), new PlayerVariablesSyncMessage(player.getData(PLAYER_VARIABLES), player.getId()));
+	    }
 	}
 
 	@SubscribeEvent public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
-		if (event.getEntity() instanceof ServerPlayer player)
+		if (event.getEntity() instanceof ServerPlayer player) {
+		    for (Entity entityiterator : player.level().players())
+		        if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+		            PacketDistributor.sendToPlayer(player, new PlayerVariablesSyncMessage(playeriterator.getData(PLAYER_VARIABLES), playeriterator.getId()));
 			PacketDistributor.sendToPlayersInDimension(player.level(), new PlayerVariablesSyncMessage(player.getData(PLAYER_VARIABLES), player.getId()));
+	    }
 	}
 
 	@SubscribeEvent public static void onPlayerTickUpdateSyncPlayerVariables(PlayerTickEvent.Post event) {

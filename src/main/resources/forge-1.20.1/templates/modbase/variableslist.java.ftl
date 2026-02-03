@@ -33,18 +33,30 @@ import ${package}.${JavaModName};
     @Mod.EventBusSubscriber public static class EventBusVariableHandlers {
 		<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
         @SubscribeEvent public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
-            if (event.getEntity() instanceof ServerPlayer player)
+            if (event.getEntity() instanceof ServerPlayer player) {
+                for (Entity entityiterator : player.level().players())
+                    if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+                        playeriterator.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new PlayerVariablesSyncMessage(capability, playeriterator.getId())));
                 player.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(player.level()::dimension), new PlayerVariablesSyncMessage(capability, player.getId())));
+            }
         }
 
         @SubscribeEvent public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
-            if (event.getEntity() instanceof ServerPlayer player)
+            if (event.getEntity() instanceof ServerPlayer player) {
+                for (Entity entityiterator : player.level().players())
+                    if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+                        playeriterator.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new PlayerVariablesSyncMessage(capability, playeriterator.getId())));
                 player.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(player.level()::dimension), new PlayerVariablesSyncMessage(capability, player.getId())));
+            }
         }
 
         @SubscribeEvent public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
-            if (event.getEntity() instanceof ServerPlayer player)
+            if (event.getEntity() instanceof ServerPlayer player) {
+                for (Entity entityiterator : player.level().players())
+                    if (entityiterator != player && entityiterator instanceof ServerPlayer playeriterator)
+                        playeriterator.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new PlayerVariablesSyncMessage(capability, playeriterator.getId())));
                 player.getCapability(PLAYER_VARIABLES).ifPresent(capability -> ${JavaModName}.PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(player.level()::dimension), new PlayerVariablesSyncMessage(capability, player.getId())));
+            }
         }
 
         @SubscribeEvent public static void onPlayerTickUpdateSyncPlayerVariables(TickEvent.PlayerTickEvent event) {
