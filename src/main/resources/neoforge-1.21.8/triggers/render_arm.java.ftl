@@ -12,7 +12,7 @@
 				"entity": "mc.player",
 				"poseStack": "event.getPoseStack()",
 				"entityModel": "(EntityModel) renderer.getModel()",
-				"entityTexture": "renderer.getTextureLocation((PlayerRenderState) renderer.createRenderState(mc.player, event.getPartialTick()))",
+				"entityTexture": "renderer.getTextureLocation((PlayerRenderState) renderer.createRenderState(mc.player, 0))",
 				"armRenderEvent": "event",
 				"event": "event"
 			}/>
