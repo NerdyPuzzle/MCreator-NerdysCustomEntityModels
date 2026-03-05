@@ -17,6 +17,10 @@ public net.minecraft.world.level.levelgen.feature.ScatteredOreFeature <init>(Lco
 public-f net.minecraft.world.level.levelgen.feature.TreeFeature place(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z
 </#if>
 
+<#if w.hasElementsOfType("armor")>
+public-f net.minecraft.client.model.Model renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V
+</#if>
+
 public net.minecraft.client.renderer.entity.player.PlayerRenderer setupRotations(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V
 public net.minecraft.client.model.PlayerModel slim
 public-f net.minecraft.client.model.geom.ModelPart children
