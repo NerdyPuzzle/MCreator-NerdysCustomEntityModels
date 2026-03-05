@@ -5,7 +5,7 @@ import net.mcreator.element.ModElementTypeLoader;
 import net.mcreator.plugin.JavaPlugin;
 import net.mcreator.plugin.Plugin;
 import net.mcreator.plugin.events.PreGeneratorsLoadingEvent;
-import net.mcreator.plugin.events.ui.BlocklyPanelRegisterJSObjects;
+import net.mcreator.plugin.events.ui.BlocklyPanelRegisterDOMData;
 import net.nerdypuzzle.entitymodels.elements.HumanoidModel;
 import net.nerdypuzzle.entitymodels.elements.HumanoidModelGUI;
 import net.nerdypuzzle.entitymodels.parts.PluginJavascriptBridge;
@@ -21,9 +21,9 @@ public class Launcher extends JavaPlugin {
 		super(plugin);
 
         addListener(PreGeneratorsLoadingEvent.class, event -> HUMANOIDMODEL = ModElementTypeLoader.register(new ModElementType<>("humanoidmodel", (Character) 'H', HumanoidModelGUI::new, HumanoidModel.class)));
-        addListener(BlocklyPanelRegisterJSObjects.class, event -> {
+        addListener(BlocklyPanelRegisterDOMData.class, event -> {
             pluginJavascriptBridge = new PluginJavascriptBridge(event.getBlocklyPanel().getMCreator());
-            event.getDOMWindow().put("modelbridge", pluginJavascriptBridge);
+            event.addJavaScriptBridge("modelbridge", pluginJavascriptBridge);
         });
 
 		LOG.info("Nerdy's custom entity models plugin was loaded");
