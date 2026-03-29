@@ -2,8 +2,7 @@
   "id": "nerdys_custom_entity_models",
   "weight": 7000,
   "supportedversions": [
-    2026001,
-    202600110319
+    2026001
   ],
   "javaplugin": "net.nerdypuzzle.entitymodels.Launcher",
   "info": {
