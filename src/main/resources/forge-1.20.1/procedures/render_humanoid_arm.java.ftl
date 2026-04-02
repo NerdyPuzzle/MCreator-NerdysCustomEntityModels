@@ -1,7 +1,13 @@
 {
     ResourceLocation texture = ${input$texture};
     PlayerModel humanoidModel = ${generator.map(field$model, "humanoidmodels")?replace("CUSTOM:", "")};
-    ModelPart part = armRenderEvent.getArm() == HumanoidArm.LEFT ? humanoidModel.leftArm : humanoidModel.rightArm;
+    PlayerModel playerOriginal = (PlayerModel) entityModel;
+    boolean lefthanded = armRenderEvent.getArm() == HumanoidArm.LEFT;
+    ModelPart part = lefthanded ? humanoidModel.leftArm : humanoidModel.rightArm;
+    boolean partVisible = part.visible;
     part.resetPose();
+    part.copyFrom(lefthanded ? playerOriginal.leftArm : playerOriginal.rightArm);
+    part.visible = true;
     part.render(poseStack, armRenderEvent.getMultiBufferSource().getBuffer(RenderType.${generator.map(field$rendertype, "rendertypes")})), armRenderEvent.getPackedLight(), OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+    part.visible = partVisible;
 }

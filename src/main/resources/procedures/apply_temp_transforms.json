@@ -20,7 +20,7 @@
     "statements": [
       {
         "name": "do",
-        "disable_local_variables": true
+        "disable_local_variables": false
       }
     ]
   }
