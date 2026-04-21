@@ -73,7 +73,7 @@
 	public static void renderEntity(RenderPlayerEvent playerRenderEvent, EntityModel model, VertexConsumer vertexConsumer, LivingEntityRenderState state) {
         PoseStack poseStack = playerRenderEvent.getPoseStack();
         poseStack.pushPose();
-		playerRenderEvent.getRenderer().setupRotations((PlayerRenderState) state, poseStack, state.bodyRot, 0);
+		playerRenderEvent.getRenderer().setupRotations((PlayerRenderState) state, poseStack, state.bodyRot, 69);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.setupAnim(state);

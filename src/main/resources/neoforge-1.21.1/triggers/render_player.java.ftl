@@ -94,7 +94,7 @@
         float netHeadYaw = interpolatedHeadYaw - interpolatedBodyYaw;
         float headPitch = Mth.lerp(partialTick, eventEntity_.xRotO, eventEntity_.getXRot());
         poseStack.pushPose();
-        playerRenderEvent.getRenderer().setupRotations(eventEntity_, poseStack, ageInTicks, interpolatedBodyYaw, partialTick, 0);
+        playerRenderEvent.getRenderer().setupRotations(eventEntity_, poseStack, ageInTicks, interpolatedBodyYaw, partialTick, 69);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.prepareMobModel(eventEntity_, limbSwing, limbSwingAmount, partialTick);
