@@ -9,6 +9,9 @@
     if (lefthanded) playerOriginal.leftArm.resetPose(); else playerOriginal.rightArm.resetPose();
     part.copyFrom(lefthanded ? playerOriginal.leftArm : playerOriginal.rightArm);
     part.visible = true;
+	part.zRot = 0.1f;
+    part.xRot = -0.005f;
+    part.y = 2;
     part.render(poseStack, armRenderEvent.getMultiBufferSource().getBuffer(RenderType.${generator.map(field$rendertype, "rendertypes")})), armRenderEvent.getPackedLight(), OverlayTexture.NO_OVERLAY);
     part.visible = partVisible;
 }
