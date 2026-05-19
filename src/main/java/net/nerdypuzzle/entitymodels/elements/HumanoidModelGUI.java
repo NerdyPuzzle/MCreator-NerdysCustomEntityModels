@@ -33,7 +33,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class HumanoidModelGUI extends ModElementGUI<HumanoidModel> {
-    private final VComboBox<Model> humanoidModel = new SearchableComboBox<>();
+    private final SearchableComboBox<Model> humanoidModel = new SearchableComboBox<>();
 
     private final VComboBox<String> helmetModelPart = new SearchableComboBox<>(new String[]{"Empty"});
 

@@ -102,6 +102,17 @@
         float ageInTicks = eventEntity_.tickCount + partialTick;
         float interpolatedBodyYaw = Mth.rotLerp(partialTick, eventEntity_.yBodyRotO, eventEntity_.yBodyRot);
         float interpolatedHeadYaw = Mth.rotLerp(partialTick, eventEntity_.yHeadRotO, eventEntity_.yHeadRot);
+        if (eventEntity_.isPassenger() && eventEntity_.getVehicle() instanceof LivingEntity vehicle) {
+			interpolatedBodyYaw = Mth.rotLerp(partialTick, vehicle.yBodyRotO, vehicle.yBodyRot);
+			float yawDiff = Mth.wrapDegrees(interpolatedHeadYaw - interpolatedBodyYaw);
+			if (yawDiff < -85.0F) yawDiff = -85.0F;
+			if (yawDiff >= 85.0F) yawDiff = 85.0F;
+			interpolatedBodyYaw = interpolatedHeadYaw - yawDiff;
+			if (yawDiff * yawDiff > 2500.0F) {
+				interpolatedBodyYaw += yawDiff * 0.2F;
+			}
+			interpolatedBodyYaw = Mth.wrapDegrees(interpolatedBodyYaw);
+		}
         float netHeadYaw = interpolatedHeadYaw - interpolatedBodyYaw;
         float headPitch = Mth.lerp(partialTick, eventEntity_.xRotO, eventEntity_.getXRot());
         poseStack.pushPose();

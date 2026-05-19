@@ -6,6 +6,8 @@ import net.mcreator.plugin.JavaPlugin;
 import net.mcreator.plugin.Plugin;
 import net.mcreator.plugin.events.PreGeneratorsLoadingEvent;
 import net.mcreator.plugin.events.ui.BlocklyPanelRegisterDOMData;
+import net.nerdypuzzle.entitymodels.elements.AnimatedModel;
+import net.nerdypuzzle.entitymodels.elements.AnimatedModelGUI;
 import net.nerdypuzzle.entitymodels.elements.HumanoidModel;
 import net.nerdypuzzle.entitymodels.elements.HumanoidModelGUI;
 import net.nerdypuzzle.entitymodels.parts.PluginJavascriptBridge;
@@ -14,13 +16,17 @@ import org.apache.logging.log4j.Logger;
 
 public class Launcher extends JavaPlugin {
     public static ModElementType<?> HUMANOIDMODEL;
+    public static ModElementType<?> ANIMATEDMODEL;
 	private static final Logger LOG = LogManager.getLogger("Nerdy's custom entity models");
     public static PluginJavascriptBridge pluginJavascriptBridge = null;
 
 	public Launcher(Plugin plugin) {
 		super(plugin);
 
-        addListener(PreGeneratorsLoadingEvent.class, event -> HUMANOIDMODEL = ModElementTypeLoader.register(new ModElementType<>("humanoidmodel", (Character) 'H', HumanoidModelGUI::new, HumanoidModel.class)));
+        addListener(PreGeneratorsLoadingEvent.class, event -> {
+            HUMANOIDMODEL = ModElementTypeLoader.register(new ModElementType<>("humanoidmodel", (Character) 'H', HumanoidModelGUI::new, HumanoidModel.class));
+            ANIMATEDMODEL = ModElementTypeLoader.register(new ModElementType<>("animatedmodel", (Character) 'A', AnimatedModelGUI::new, AnimatedModel.class));
+        });
         addListener(BlocklyPanelRegisterDOMData.class, event -> {
             pluginJavascriptBridge = new PluginJavascriptBridge(event.getBlocklyPanel().getMCreator());
             event.addJavaScriptBridge("modelbridge", pluginJavascriptBridge);
