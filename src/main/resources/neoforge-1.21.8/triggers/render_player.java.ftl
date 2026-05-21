@@ -77,6 +77,10 @@
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.setupAnim(state);
+        <#if w.hasElementsOfType("animatedmodel")>
+        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable)
+            animatable.applyPlayerRotations((PlayerModel) playerRenderEvent.getRenderer().getModel());
+        </#if>
         model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(state, 0));
         poseStack.popPose();
     }

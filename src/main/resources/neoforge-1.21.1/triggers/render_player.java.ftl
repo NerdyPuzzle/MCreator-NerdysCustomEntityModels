@@ -94,7 +94,8 @@
 
 	public static void renderEntity(RenderPlayerEvent playerRenderEvent, EntityModel model, VertexConsumer vertexConsumer) {
         PoseStack poseStack = playerRenderEvent.getPoseStack();
-        playerRenderEvent.getRenderer().getModel().copyPropertiesTo(model);
+        PlayerModel playerModel = (PlayerModel) playerRenderEvent.getRenderer().getModel();
+        playerModel.copyPropertiesTo(model);
         AbstractClientPlayer eventEntity_ = (AbstractClientPlayer) playerRenderEvent.getEntity();
         float partialTick = playerRenderEvent.getPartialTick();
         float limbSwing = eventEntity_.walkAnimation.position(partialTick);
@@ -121,6 +122,10 @@
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.prepareMobModel(eventEntity_, limbSwing, limbSwingAmount, partialTick);
         model.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        <#if w.hasElementsOfType("animatedmodel")>
+        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable)
+            animatable.applyPlayerRotations(playerModel);
+        </#if>
         model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(eventEntity_, 0));
         poseStack.popPose();
     }

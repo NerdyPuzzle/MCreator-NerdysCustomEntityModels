@@ -18,20 +18,22 @@ public class ${JavaModName}AnimatedModels {
 	<#list animatedmodels as model>
 	private static EntityModel create${model.modelName}() {
 		ModelPart root = Minecraft.getInstance().getEntityModels().bakeLayer(${model.modelName}.LAYER_LOCATION);
-		return new ${model.modelName}(root) {
-		   <#list model.animations as animation>
-			  private final KeyframeAnimation keyframeAnimation${animation?index} = safeBake(${animation.animation});
-		   </#list>
+		class Animatable${model.modelName} extends ${model.modelName} implements Animatable {
+			Animatable${model.modelName}(ModelPart root) { super(root); }
 
-		   private final Map<Entity, Map<Integer, Long>> animationStartTimes = new WeakHashMap<>();
+			<#list model.animations as animation>
+			   private final KeyframeAnimation keyframeAnimation${animation?index} = safeBake(${animation.animation});
+			</#list>
 
-		   private KeyframeAnimation safeBake(AnimationDefinition source) {
-			  try {
-				 return source.bake(root);
-			  } catch (IllegalArgumentException e) {
-				 return new AnimationDefinition(0, false, Map.of()).bake(root);
-			  }
-		   }
+			private final Map<Entity, Map<Integer, Long>> animationStartTimes = new WeakHashMap<>();
+
+			private KeyframeAnimation safeBake(AnimationDefinition source) {
+			   try {
+				  return source.bake(root);
+			   } catch (IllegalArgumentException e) {
+				  return new AnimationDefinition(0, false, Map.of()).bake(root);
+			   }
+			}
 
 			@Override
 			public void setupAnim(LivingEntityRenderState state) {
@@ -78,7 +80,41 @@ public class ${JavaModName}AnimatedModels {
 				</#list>
 				super.setupAnim(state);
 			}
-		};
+
+			@Override
+			public ModelPart getRoot() {
+				return root;
+			}
+		}
+		return new Animatable${model.modelName}(root);
 	}
 	</#list>
+
+	public static interface Animatable {
+		ModelPart getRoot();
+
+		default void applyPlayerRotations(PlayerModel playerModel) {
+			ModelPart root = getRoot();
+
+			Map<String, ModelPart> playerParts = Map.of(
+				"head",      playerModel.head,
+				"body",      playerModel.body,
+				"right_arm", playerModel.rightArm,
+				"left_arm",  playerModel.leftArm,
+				"right_leg", playerModel.rightLeg,
+				"left_leg",  playerModel.leftLeg
+			);
+
+			playerParts.forEach((name, playerPart) -> {
+				try {
+					ModelPart myPart = root.getChild(name);
+					myPart.xRot += playerPart.xRot;
+					myPart.yRot += playerPart.yRot;
+					myPart.zRot += playerPart.zRot;
+				} catch (NoSuchElementException ignored) {
+					// this model simply doesn't have a part by that name
+				}
+			});
+		}
+	}
 }
