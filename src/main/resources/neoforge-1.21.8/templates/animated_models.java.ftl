@@ -108,9 +108,7 @@ public class ${JavaModName}AnimatedModels {
 			playerParts.forEach((name, playerPart) -> {
 				try {
 					ModelPart myPart = root.getChild(name);
-					myPart.xRot += playerPart.xRot;
-					myPart.yRot += playerPart.yRot;
-					myPart.zRot += playerPart.zRot;
+					myPart.copyFrom(playerPart);
 				} catch (NoSuchElementException ignored) {
 					// this model simply doesn't have a part by that name
 				}
