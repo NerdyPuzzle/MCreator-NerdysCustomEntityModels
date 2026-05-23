@@ -78,8 +78,22 @@
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.setupAnim(state);
         <#if w.hasElementsOfType("animatedmodel")>
-        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable)
-            animatable.applyPlayerRotations((PlayerModel) playerRenderEvent.getRenderer().getModel());
+        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable) {
+            CompoundTag playerData = state.getRenderData(${JavaModName}RenderStateModifiers.LIVING_ENTITY).getPersistentData();
+            PlayerModel playerModel = (PlayerModel) playerRenderEvent.getRenderer().getModel();
+            float oldAnimationProgress = 0;
+            float oldAgeInTicks = 0;
+            if (playerData.contains("PlayerAnimationProgress")) {
+                oldAnimationProgress = playerData.getFloatOr("PlayerAnimationProgress", 0);
+                oldAgeInTicks = playerData.getFloatOr("LastTickTime", 0);
+            }
+    		playerModel.setupAnim((PlayerRenderState) state);
+            if (playerData.contains("PlayerAnimationProgress") && playerData.getFloatOr("PlayerAnimationProgress", 0) > 0) {
+                playerData.putFloat("PlayerAnimationProgress", oldAnimationProgress);
+                playerData.putFloat("LastTickTime", oldAgeInTicks);
+            }
+            animatable.applyPlayerRotations(playerModel);
+        }
         </#if>
         model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(state, 0));
         poseStack.popPose();

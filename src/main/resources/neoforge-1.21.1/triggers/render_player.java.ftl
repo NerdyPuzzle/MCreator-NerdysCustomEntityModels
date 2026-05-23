@@ -123,8 +123,21 @@
         model.prepareMobModel(eventEntity_, limbSwing, limbSwingAmount, partialTick);
         model.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         <#if w.hasElementsOfType("animatedmodel")>
-        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable)
+        if (model instanceof ${JavaModName}AnimatedModels.Animatable animatable) {
+            CompoundTag playerData = eventEntity_.getPersistentData();
+            float oldAnimationProgress = 0;
+            float oldAgeInTicks = 0;
+            if (playerData.contains("PlayerAnimationProgress")) {
+                oldAnimationProgress = playerData.getFloat("PlayerAnimationProgress");
+                oldAgeInTicks = playerData.getFloat("LastTickTime");
+            }
+            playerModel.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            if (playerData.contains("PlayerAnimationProgress") && playerData.getFloat("PlayerAnimationProgress") > 0) {
+                playerData.putFloat("PlayerAnimationProgress", oldAnimationProgress);
+                playerData.putFloat("LastTickTime", oldAgeInTicks);
+            }
             animatable.applyPlayerRotations(playerModel);
+        }
         </#if>
         model.renderToBuffer(poseStack, vertexConsumer, playerRenderEvent.getPackedLight(), LivingEntityRenderer.getOverlayCoords(eventEntity_, 0));
         poseStack.popPose();
