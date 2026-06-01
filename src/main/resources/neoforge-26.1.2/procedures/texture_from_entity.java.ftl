@@ -1,0 +1,1 @@
+(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(${input$entity}) instanceof LivingEntityRenderer renderer${cbi} ? renderer${cbi}.getTextureLocation((LivingEntityRenderState) renderer${cbi}.createRenderState(${input$entity}, 0)) : null)

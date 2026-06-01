@@ -1,0 +1,1 @@
+(Identifier.fromNamespaceAndPath("${modid}", "textures/entities/${field$texture}.png"))
