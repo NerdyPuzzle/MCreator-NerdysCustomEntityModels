@@ -1,1 +1,0 @@
-hitboxCalculationEvent.setNewSize(new EntityDimensions(${opt.toFloat(input$width)}, ${opt.toFloat(input$height)}, false));

@@ -1,1 +1,0 @@
-poseStack.scale(${opt.toFloat(input$x)}, ${opt.toFloat(input$y)}, ${opt.toFloat(input$z)});

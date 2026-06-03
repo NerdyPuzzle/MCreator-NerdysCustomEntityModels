@@ -1,1 +1,0 @@
-poseStack.mulPose(Axis.${field$axis}P.rotationDegrees(${opt.toFloat(input$degrees)}));

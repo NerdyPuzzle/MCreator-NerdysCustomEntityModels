@@ -1,3 +1,0 @@
-global_templates:
-  - template: humanoid_models.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameHumanoidModels.java"

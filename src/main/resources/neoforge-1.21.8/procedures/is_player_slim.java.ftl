@@ -1,1 +1,0 @@
-(((PlayerModel) entityModel).slim)

@@ -1,3 +1,0 @@
-global_templates:
-  - template: animated_models.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameAnimatedModels.java"

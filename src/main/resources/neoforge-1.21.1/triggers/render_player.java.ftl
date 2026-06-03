@@ -77,6 +77,13 @@
         } else if (oldAnimationProgress > 0) {
             model.setupAnim(eventEntity_, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         }
+		if (eventEntity_.hasPose(Pose.SLEEPING)) {
+			Direction direction = eventEntity_.getBedOrientation();
+			if (direction != null) {
+				float eyeHeightOffset = eventEntity_.getEyeHeight(Pose.STANDING) - 0.1F;
+				poseStack.translate((float)(-direction.getStepX()) * eyeHeightOffset, 0.0F, (float)(-direction.getStepZ()) * eyeHeightOffset);
+			}
+		}
         playerRenderEvent.getRenderer().setupRotations(eventEntity_, poseStack, ageInTicks, interpolatedBodyYaw, partialTick, 0);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
@@ -117,6 +124,13 @@
         float netHeadYaw = interpolatedHeadYaw - interpolatedBodyYaw;
         float headPitch = Mth.lerp(partialTick, eventEntity_.xRotO, eventEntity_.getXRot());
         poseStack.pushPose();
+		if (eventEntity_.hasPose(Pose.SLEEPING)) {
+			Direction direction = eventEntity_.getBedOrientation();
+			if (direction != null) {
+				float eyeHeightOffset = eventEntity_.getEyeHeight(Pose.STANDING) - 0.1F;
+				poseStack.translate((float)(-direction.getStepX()) * eyeHeightOffset, 0.0F, (float)(-direction.getStepZ()) * eyeHeightOffset);
+			}
+		}
         playerRenderEvent.getRenderer().setupRotations(eventEntity_, poseStack, ageInTicks, interpolatedBodyYaw, partialTick, 69);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);

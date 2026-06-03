@@ -1,1 +1,0 @@
-(${generator.map(field$model, "animatedmodels")?replace("CUSTOM:", "")})
