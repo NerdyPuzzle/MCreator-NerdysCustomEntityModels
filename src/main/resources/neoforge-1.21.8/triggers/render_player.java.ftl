@@ -39,6 +39,7 @@
 	}
 
 	public static void renderHumanoid(RenderPlayerEvent playerRenderEvent, PlayerModel model, VertexConsumer vertexConsumer, PlayerRenderState state) {
+		LivingEntity eventEntity_ = (LivingEntity) playerRenderEvent.getRenderState().getRenderData(${JavaModName}RenderStateModifiers.LIVING_ENTITY);
 		PoseStack poseStack = playerRenderEvent.getPoseStack();
 		poseStack.pushPose();
         CompoundTag playerData = state.getRenderData(${JavaModName}RenderStateModifiers.LIVING_ENTITY).getPersistentData();
@@ -55,6 +56,13 @@
         } else if (oldAnimationProgress > 0) {
             model.setupAnim(state);
         }
+		if (eventEntity_.hasPose(Pose.SLEEPING)) {
+			Direction direction = eventEntity_.getBedOrientation();
+			if (direction != null) {
+				float eyeHeightOffset = eventEntity_.getEyeHeight(Pose.STANDING) - 0.1F;
+				poseStack.translate((float)(-direction.getStepX()) * eyeHeightOffset, 0.0F, (float)(-direction.getStepZ()) * eyeHeightOffset);
+			}
+		}
 		playerRenderEvent.getRenderer().setupRotations(state, poseStack, state.bodyRot, 0);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
@@ -71,8 +79,16 @@
 	}
 	
 	public static void renderEntity(RenderPlayerEvent playerRenderEvent, EntityModel model, VertexConsumer vertexConsumer, LivingEntityRenderState state) {
+        LivingEntity eventEntity_ = (LivingEntity) playerRenderEvent.getRenderState().getRenderData(${JavaModName}RenderStateModifiers.LIVING_ENTITY);
         PoseStack poseStack = playerRenderEvent.getPoseStack();
         poseStack.pushPose();
+		if (eventEntity_.hasPose(Pose.SLEEPING)) {
+			Direction direction = eventEntity_.getBedOrientation();
+			if (direction != null) {
+				float eyeHeightOffset = eventEntity_.getEyeHeight(Pose.STANDING) - 0.1F;
+				poseStack.translate((float)(-direction.getStepX()) * eyeHeightOffset, 0.0F, (float)(-direction.getStepZ()) * eyeHeightOffset);
+			}
+		}
 		playerRenderEvent.getRenderer().setupRotations((PlayerRenderState) state, poseStack, state.bodyRot, 69);
 		poseStack.scale(-0.938f, -0.938f, 0.938f);
 		poseStack.translate(0.0D, -1.501, 0.0D);
