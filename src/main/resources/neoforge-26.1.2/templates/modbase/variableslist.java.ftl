@@ -325,7 +325,7 @@ import net.minecraft.nbt.Tag;
 
 		public static final StreamCodec<RegistryFriendlyByteBuf, PlayerVariablesSyncMessage> STREAM_CODEC = StreamCodec.of(
 				(RegistryFriendlyByteBuf buffer, PlayerVariablesSyncMessage message) -> {
-					TagValueOutput output = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+					TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, buffer.registryAccess());
 					message.data.serialize(output);
 					buffer.writeInt(message.player());
 					buffer.writeNbt(output.buildResult());
