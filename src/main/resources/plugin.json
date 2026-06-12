@@ -7,7 +7,7 @@
   "javaplugin": "net.nerdypuzzle.entitymodels.Launcher",
   "info": {
     "name": "Nerdy's Custom Entity Models",
-    "version": "1.6.6",
+    "version": "1.6.7",
     "description": "Render custom models on any entity",
     "author": "NerdyPuzzle"
   }

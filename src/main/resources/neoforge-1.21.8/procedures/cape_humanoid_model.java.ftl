@@ -4,7 +4,7 @@
     capes.add(() -> {
         Player player = (Player) entity;
         float partialTicks = playerRenderEvent.getPartialTick();
-        if (!player.isInvisible() && !player.isFallFlying() && player.isAlive()) {
+        if (!player.isFallFlying() && player.isAlive()) {
             double dx = player.xCloakO + (player.xCloak - player.xCloakO) * partialTicks
                       - (player.xOld + (player.getX() - player.xOld) * partialTicks);
             double dy = player.yCloakO + (player.yCloak - player.yCloakO) * partialTicks
