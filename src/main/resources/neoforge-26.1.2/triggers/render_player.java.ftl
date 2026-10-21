@@ -72,7 +72,7 @@
 		    capes.forEach(cape -> cape.run());
 		    capes.clear();
 		}
-		model.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(renderType), state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
+		${JavaModName}RenderStateModifiers.submitModelPart(playerRenderEvent.getSubmitNodeCollector(), model.root(), poseStack, renderType, state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
 		offset.negate();
 		offsetScale(model, offset);
 		poseStack.popPose();
@@ -111,6 +111,6 @@
             animatable.applyPlayerRotations(playerModel);
         }
         </#if>
-        model.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(renderType), state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
+        ${JavaModName}RenderStateModifiers.submitModelPart(playerRenderEvent.getSubmitNodeCollector(), model.root(), poseStack, renderType, state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
         poseStack.popPose();
     }

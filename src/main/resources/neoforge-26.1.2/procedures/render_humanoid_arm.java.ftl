@@ -12,6 +12,6 @@
 	part.zRot = 0.1f;
     part.xRot = -0.005f;
     part.y = 2;
-    part.render(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderTypes.${generator.map(field$rendertype, "rendertypes")})), armRenderEvent.getPackedLight(), OverlayTexture.NO_OVERLAY);
+    ${JavaModName}RenderStateModifiers.submitModelPart(armRenderEvent.getSubmitNodeCollector(), part, poseStack, RenderTypes.${generator.map(field$rendertype, "rendertypes")}), armRenderEvent.getPackedLight(), OverlayTexture.NO_OVERLAY);
     part.skipDraw = partVisible;
 }

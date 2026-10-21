@@ -34,6 +34,6 @@
 		poseStack.scale(-1, -1, 1);
 		poseStack.translate(0.0D, -1.501, 0.0D);
         model.setupAnim(state);
-        model.renderToBuffer(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(renderType), state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
+        ${JavaModName}RenderStateModifiers.submitModelPart(entityRenderEvent.getSubmitNodeCollector(), model.root(), poseStack, renderType, state.lightCoords, LivingEntityRenderer.getOverlayCoords(state, 0));
         poseStack.popPose();
     }
