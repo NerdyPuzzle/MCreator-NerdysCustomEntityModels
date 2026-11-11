@@ -1,1 +1,1 @@
-((PlayerModel)entityModel).${generator.map(field$modelpart, "modelparts")}.skipDraw = !(${input$visibility});
+((PlayerModel)entityModel).${generator.map(field$modelpart, "modelparts")}.visible = ${input$visibility};

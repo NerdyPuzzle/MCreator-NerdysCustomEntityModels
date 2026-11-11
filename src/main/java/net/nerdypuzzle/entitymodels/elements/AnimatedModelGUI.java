@@ -9,7 +9,10 @@ import net.mcreator.ui.help.HelpUtils;
 import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.laf.renderer.ModelComboBoxRenderer;
 import net.mcreator.ui.laf.themes.Theme;
+import net.mcreator.ui.component.JEmptyBox;
 import net.mcreator.ui.minecraft.entityanimations.JEntityAnimationList;
+import net.mcreator.ui.minecraft.entityanimations.JEntityAnimationListEntry;
+import net.mcreator.ui.procedure.ProcedureSelector;
 import net.mcreator.ui.modgui.ModElementGUI;
 import net.mcreator.ui.validation.AggregatedValidationResult;
 import net.mcreator.workspace.elements.ModElement;
@@ -22,6 +25,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -36,7 +41,14 @@ public class AnimatedModelGUI extends ModElementGUI<AnimatedModel> {
     }
 
     protected void initGUI() {
-        animations = new JEntityAnimationList(mcreator, this);
+        animations = new JEntityAnimationList(mcreator, this, Collections::emptyList) {
+            @Override
+            protected JEntityAnimationListEntry newEntry(JPanel parent, List<JEntityAnimationListEntry> entryList, boolean userAction) {
+                JEntityAnimationListEntry entry = super.newEntry(parent, entryList, userAction);
+                moveConditionToTopLine(entry);
+                return entry;
+            }
+        };
         
         animatedModel.setRenderer(new ModelComboBoxRenderer());
         ComponentUtils.deriveFont(animatedModel, 16);
@@ -44,7 +56,7 @@ public class AnimatedModelGUI extends ModElementGUI<AnimatedModel> {
         JPanel pane2 = new JPanel(new BorderLayout(10, 10));
         JPanel model = new JPanel(new GridLayout(1, 2, 10, 10));
 
-        model.add(HelpUtils.wrapWithHelpButton(withEntry("curios/java_model"), L10N.label("elementgui.humanoidmodel.java_model", new Object[0])));
+        model.add(HelpUtils.wrapWithHelpButton(withEntry("curios/java_model"), L10N.label("elementgui.humanoidmodel.java_model")));
         model.add(animatedModel);
 
         model.setBorder(BorderFactory.createTitledBorder(
@@ -70,7 +82,9 @@ public class AnimatedModelGUI extends ModElementGUI<AnimatedModel> {
         humanoidParts.setOpaque(false);
         renderingPanel.setOpaque(false);
 
-        addPage(pane2).lazyValidate(() -> animatedModel.getSelectedItem() != null ? new AggregatedValidationResult.PASS() : new AggregatedValidationResult.FAIL(L10N.t("elementgui.humanoidmodel.no_model", new Object[0])));
+        addPage(pane2).lazyValidate(() -> animatedModel.getSelectedItem() != null
+                ? new AggregatedValidationResult.PASS()
+                : new AggregatedValidationResult.FAIL(L10N.t("elementgui.humanoidmodel.no_model")));
     }
 
     public void reloadDataLists() {
@@ -93,6 +107,42 @@ public class AnimatedModelGUI extends ModElementGUI<AnimatedModel> {
         model.modelName = animatedModel.getSelectedItem() != null ? (Objects.requireNonNull(animatedModel.getSelectedItem())).getReadableName() : null;
         model.animations = animations.getEntries();
         return model;
+    }
+
+    private static void moveConditionToTopLine(JEntityAnimationListEntry entry) {
+        ProcedureSelector condition = findComponent(entry, ProcedureSelector.class);
+        if (condition == null)
+            return;
+        Container bottomLine = condition.getParent();
+        Container line = bottomLine.getParent();
+        if (!(line.getLayout() instanceof BorderLayout layout)
+                || !(layout.getLayoutComponent(BorderLayout.NORTH) instanceof Container topLine))
+            return;
+
+        int index = topLine.getComponentCount();
+        for (int i = 0; i < topLine.getComponentCount(); i++) {
+            if (topLine.getComponent(i) instanceof JEmptyBox) {
+                topLine.remove(i);
+                index = i;
+                break;
+            }
+        }
+        topLine.add(condition, index);
+        line.remove(bottomLine);
+    }
+
+    @Nullable
+    private static <T extends Component> T findComponent(Container container, Class<T> type) {
+        for (Component component : container.getComponents()) {
+            if (type.isInstance(component))
+                return type.cast(component);
+            if (component instanceof Container child) {
+                T found = findComponent(child, type);
+                if (found != null)
+                    return found;
+            }
+        }
+        return null;
     }
 
     @Override

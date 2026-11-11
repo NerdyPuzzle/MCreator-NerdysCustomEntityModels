@@ -1,0 +1,1 @@
+(Minecraft.getInstance().options.getCameraType().isFirstPerson() && Minecraft.getInstance().player == entity && (Minecraft.getInstance().gui.screen() == null || Minecraft.getInstance().gui.screen() instanceof ChatScreen))

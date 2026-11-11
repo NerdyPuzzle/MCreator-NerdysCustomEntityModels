@@ -129,7 +129,6 @@ public class HumanoidModelGUI extends ModElementGUI<HumanoidModel> {
             leggingsModelPartR.addItem("Empty");
         };
         modelListener.actionPerformed(new ActionEvent("", 0, ""));
-        humanoidModel.setFocusable(false);
 
         addPage(pane2).lazyValidate(() -> humanoidModel.getSelectedItem() != null ? new AggregatedValidationResult.PASS() : new AggregatedValidationResult.FAIL(L10N.t("elementgui.humanoidmodel.no_model", new Object[0])));
     }
@@ -150,6 +149,14 @@ public class HumanoidModelGUI extends ModElementGUI<HumanoidModel> {
                 .filter(el -> el.getType() == Model.Type.JAVA)
                 .collect(Collectors.toList()));
         humanoidModel.addActionListener(modelListener);
+        if (humanoidModel.getSelectedItem() != null) {
+            reloadPartList(helmetModelPart);
+            reloadPartList(bodyModelPart);
+            reloadPartList(armsModelPartL);
+            reloadPartList(armsModelPartR);
+            reloadPartList(leggingsModelPartL);
+            reloadPartList(leggingsModelPartR);
+        }
     }
 
     protected void openInEditingMode(HumanoidModel model) {
