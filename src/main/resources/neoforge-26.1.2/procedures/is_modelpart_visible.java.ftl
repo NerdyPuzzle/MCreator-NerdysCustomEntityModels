@@ -1,1 +1,1 @@
-(((PlayerModel)entityModel).${generator.map(field$modelpart, "modelparts")}.skipDraw)
+(((PlayerModel)entityModel).${generator.map(field$modelpart, "modelparts")}.visible)
