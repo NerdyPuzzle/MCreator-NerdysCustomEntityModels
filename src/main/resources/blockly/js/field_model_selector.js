@@ -45,7 +45,7 @@ class FieldModelSelector extends Blockly.Field {
                         Blockly.Events.setGroup(true);
                         thisField.setValue(value);
                         Blockly.Events.setGroup(group);
-                        triggerEvent();
+                        javabridge.triggerEvent();
                     }
                 });
             } else {
